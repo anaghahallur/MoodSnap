@@ -1,0 +1,147 @@
+.bubble-breathing {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.instruction-box {
+    text-align: center;
+    margin-bottom: 2rem;
+    z-index: 10;
+}
+
+.phase-text {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.5s ease;
+}
+
+.phase-text.inhale {
+    color: #55efc4;
+}
+
+.phase-text.hold {
+    color: #81ecec;
+}
+
+.phase-text.exhale {
+    color: #74b9ff;
+}
+
+.phase-text.pause {
+    color: #a29bfe;
+}
+
+.seconds-text {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.breathing-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    transition: transform 4s linear, background 0.5s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.breathing-circle.inhale {
+    transform: scale(2.5);
+    background: rgba(85, 239, 196, 0.2);
+    border-color: #55efc4;
+}
+
+.breathing-circle.hold {
+    transform: scale(2.5);
+    background: rgba(129, 236, 236, 0.2);
+    border-color: #81ecec;
+}
+
+.breathing-circle.exhale {
+    transform: scale(1);
+    background: rgba(116, 185, 255, 0.2);
+    border-color: #74b9ff;
+}
+
+.breathing-circle.pause {
+    transform: scale(1);
+    background: rgba(162, 155, 254, 0.2);
+    border-color: #a29bfe;
+}
+
+.inner-glow {
+    width: 60%;
+    height: 60%;
+    border-radius: 50%;
+    filter: blur(15px);
+    background: white;
+    opacity: 0.3;
+}
+
+.bubbles-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.floating-bubble {
+    position: absolute;
+    bottom: -50px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1));
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    animation: float-up linear forwards;
+    cursor: pointer;
+    pointer-events: auto;
+    transition: transform 0.2s;
+}
+
+.floating-bubble:active {
+    transform: scale(0.8);
+}
+
+.game-hint {
+    margin-top: 2rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-style: italic;
+    z-index: 10;
+}
+
+@keyframes float-up {
+    0% {
+        transform: translateY(0) rotate(0);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 0.8;
+    }
+
+    90% {
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: translateY(-500px) rotate(360deg);
+        opacity: 0;
+    }
+}

@@ -1,0 +1,105 @@
+.bubble-popper-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    padding: 1rem;
+}
+
+.bubble-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 15px;
+    margin-bottom: 2rem;
+}
+
+.bubble-item {
+    width: 50px;
+    height: 50px;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1));
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.1s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bubble-item:hover {
+    transform: scale(1.05);
+}
+
+.bubble-item:active {
+    transform: scale(0.9);
+}
+
+.bubble-item.popped {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+    pointer-events: none;
+    transform: scale(0.95);
+}
+
+.bubble-inner {
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    filter: blur(2px);
+    transition: opacity 0.2s;
+}
+
+.bubble-item.popped .bubble-inner {
+    opacity: 0;
+}
+
+.reset-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(15, 23, 42, 0.9);
+    padding: 2rem;
+    border-radius: var(--radius-sm);
+    text-align: center;
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--primary-accent);
+    z-index: 10;
+    animation: fade-in 0.3s ease;
+}
+
+.reset-btn {
+    margin-top: 1rem;
+    background: var(--primary-accent);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.popper-hint {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-style: italic;
+    text-align: center;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -40%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}

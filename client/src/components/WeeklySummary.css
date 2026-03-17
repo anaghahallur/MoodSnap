@@ -1,0 +1,45 @@
+.weekly-summary {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    animation: fade-up 0.8s ease-out;
+    border-left: 4px solid var(--secondary-accent);
+}
+
+.summary-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.summary-icon {
+    font-size: 1.25rem;
+}
+
+.weekly-summary h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: 0.5px;
+}
+
+.summary-text {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+@keyframes fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

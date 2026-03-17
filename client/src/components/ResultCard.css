@@ -1,0 +1,186 @@
+.result-card-container {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    background: var(--glass-bg);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 var(--glass-highlight);
+    border-top-width: 2px;
+    position: relative;
+    overflow: hidden;
+    padding: 3rem;
+    width: 100%;
+}
+
+.result-card-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+    opacity: 0.5;
+}
+
+.result-card-container.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.emotion-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.emotion-emoji {
+    flex-shrink: 0;
+    font-size: 3.5rem;
+    line-height: 1;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+    animation: bounce-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.2s;
+    opacity: 0;
+    transform: scale(0.5);
+}
+
+@keyframes bounce-in {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.emotion-text-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.emotion-label-prefix {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+    opacity: 0;
+    animation: fade-in 0.5s ease forwards;
+    animation-delay: 0.3s;
+}
+
+.emotion-label {
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--text-primary);
+    text-transform: capitalize;
+    opacity: 0;
+    animation: slide-right 0.5s ease forwards;
+    animation-delay: 0.4s;
+}
+
+.divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--glass-border) 20%, var(--glass-border) 80%, transparent);
+    margin: 1.5rem 0;
+    opacity: 0;
+    animation: fade-in 0.5s ease forwards;
+    animation-delay: 0.5s;
+}
+
+.result-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.empathetic-message {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: var(--text-primary);
+    font-weight: 400;
+    font-style: italic;
+    opacity: 0;
+    animation: fade-up 0.5s ease forwards;
+    animation-delay: 0.6s;
+    padding-left: 1rem;
+    border-left: 3px solid var(--accent-color);
+}
+
+.tip-container {
+    display: flex;
+    gap: 1rem;
+    background: rgba(99, 102, 241, 0.08);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: var(--radius-sm);
+    padding: 1.25rem;
+    opacity: 0;
+    animation: fade-up 0.5s ease forwards;
+    animation-delay: 0.7s;
+}
+
+.tip-icon {
+    color: var(--accent-light, #818cf8);
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+}
+
+.tip-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.tip-label {
+    font-size: 0.85rem;
+    color: var(--accent-light, #818cf8);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.tip-text {
+    font-size: 1.05rem;
+    line-height: 1.5;
+    margin: 0;
+    color: var(--text-primary);
+}
+
+/* Animations */
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slide-right {
+    from {
+        opacity: 0;
+        transform: translateX(-15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}

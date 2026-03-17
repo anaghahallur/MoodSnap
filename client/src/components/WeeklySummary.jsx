@@ -1,0 +1,38 @@
+import React, { useState, useEffect } from 'react';
+import './WeeklySummary.css';
+
+const WeeklySummary = ({ apiUrl }) => {
+    const [summary, setSummary] = useState('');
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchSummary = async () => {
+            try {
+                const response = await fetch(`${apiUrl}/summary`);
+                const data = await response.json();
+                setSummary(data.summary);
+            } catch (err) {
+                console.error('Error fetching summary:', err);
+                setSummary('Unable to generate your summary right now. Keep tracking!');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchSummary();
+    }, [apiUrl]);
+
+    if (loading) return null; // Don't show anything while loading to keep the UI clean
+
+    return (
+        <div className="weekly-summary glass-panel">
+            <div className="summary-header">
+                <span className="summary-icon">✨</span>
+                <h3>Weekly Reflection</h3>
+            </div>
+            <p className="summary-text">{summary}</p>
+        </div>
+    );
+};
+
+export default WeeklySummary;
