@@ -18,7 +18,7 @@
     font-size: 4rem;
     width: 100px;
     height: 100px;
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--glass-bg);
     border: 2px solid var(--glass-border);
     border-radius: 50%;
     display: flex;
@@ -44,7 +44,7 @@
 }
 
 .stat-card {
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--glass-bg);
     border: 1px solid var(--glass-border);
     padding: 1.5rem;
     border-radius: var(--radius-md);
@@ -57,7 +57,7 @@
 .stat-value {
     font-size: 1.8rem;
     font-weight: 800;
-    color: var(--primary-accent);
+    color: var(--accent-color);
 }
 
 .stat-label {
@@ -95,18 +95,23 @@
     border-radius: 100px;
     border: 1px solid var(--glass-border);
     font-weight: 600;
-    cursor: default;
+    cursor: pointer;
+    background: transparent;
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
 }
 
 .toggle-btn.active {
-    background: var(--primary-accent);
+    background: var(--accent-color);
     color: white;
-    border-color: var(--primary-accent);
+    border-color: var(--accent-color);
 }
 
 .toggle-btn.disabled {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--glass-bg);
     color: var(--text-secondary);
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 @keyframes fade-in {

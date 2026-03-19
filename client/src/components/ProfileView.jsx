@@ -1,7 +1,7 @@
 import React from 'react';
 import './ProfileView.css';
 
-const ProfileView = ({ heatmapData }) => {
+const ProfileView = ({ heatmapData, theme, onToggleTheme }) => {
     const totalEntries = heatmapData.length;
     const emotions = heatmapData.reduce((acc, curr) => {
         acc[curr.emotion] = (acc[curr.emotion] || 0) + 1;
@@ -43,7 +43,12 @@ const ProfileView = ({ heatmapData }) => {
                 </div>
                 <div className="setting-item">
                     <span>Dark Mode</span>
-                    <button className="toggle-btn active">On</button>
+                    <button
+                        className={`toggle-btn ${theme === 'dark' ? 'active' : ''}`}
+                        onClick={onToggleTheme}
+                    >
+                        {theme === 'dark' ? 'On' : 'Off'}
+                    </button>
                 </div>
             </div>
         </div>

@@ -10,6 +10,7 @@ import ProfileView from './components/ProfileView';
 
 function App() {
   const [currentView, setCurrentView] = useState('home');
+  const [theme, setTheme] = useState(localStorage.getItem('moodsnap-theme') || 'dark');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [currentResult, setCurrentResult] = useState(null);
   const [heatmapData, setHeatmapData] = useState([]);
@@ -20,7 +21,16 @@ function App() {
 
   useEffect(() => {
     fetchHistory();
+    // Apply theme on mount
+    document.documentElement.classList.toggle('light-mode', theme === 'light');
   }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(newTheme);
+    localStorage.setItem('moodsnap-theme', newTheme);
+    document.documentElement.classList.toggle('light-mode', newTheme === 'light');
+  };
 
   const fetchHistory = async () => {
     try {
@@ -124,7 +134,11 @@ function App() {
       case 'profile':
         return (
           <div className="view-container profile-page animated">
-            <ProfileView heatmapData={heatmapData} />
+            <ProfileView
+              heatmapData={heatmapData}
+              theme={theme}
+              onToggleTheme={toggleTheme}
+            />
           </div>
         );
       default:
@@ -134,7 +148,12 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar currentView={currentView} onViewChange={setCurrentView} />
+      <Navbar
+        currentView={currentView}
+        onViewChange={setCurrentView}
+        theme={theme}
+        onToggleTheme={toggleTheme}
+      />
       <main className="app-main">
         {renderView()}
       </main>

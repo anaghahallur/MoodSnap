@@ -114,8 +114,8 @@
 .tip-container {
     display: flex;
     gap: 1rem;
-    background: rgba(99, 102, 241, 0.08);
-    border: 1px solid rgba(99, 102, 241, 0.2);
+    background: var(--accent-glow);
+    border: 1px solid var(--glass-border);
     border-radius: var(--radius-sm);
     padding: 1.25rem;
     opacity: 0;
@@ -124,7 +124,7 @@
 }
 
 .tip-icon {
-    color: var(--accent-light, #818cf8);
+    color: var(--accent-color);
     flex-shrink: 0;
     margin-top: 0.1rem;
 }
@@ -137,7 +137,7 @@
 
 .tip-label {
     font-size: 0.85rem;
-    color: var(--accent-light, #818cf8);
+    color: var(--accent-color);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;

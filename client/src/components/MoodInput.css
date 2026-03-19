@@ -10,7 +10,7 @@
 .mood-input-container:focus-within {
     border-color: var(--glass-highlight);
     transform: translateY(-2px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 0 20px rgba(99, 102, 241, 0.1);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1), 0 0 20px var(--accent-glow);
 }
 
 .mood-textarea {
@@ -96,9 +96,9 @@
 .spinner {
     width: 20px;
     height: 20px;
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    border: 2px solid var(--glass-border);
     border-radius: 50%;
-    border-top-color: #fff;
+    border-top-color: var(--accent-color);
     animation: spin 0.8s linear infinite;
 }
 
