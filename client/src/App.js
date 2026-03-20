@@ -8,7 +8,11 @@ import Analytics from './components/Analytics';
 import Navbar from './components/Navbar';
 import ProfileView from './components/ProfileView';
 
+import { supabase } from './supabaseClient';
+import Auth from './components/Auth';
+
 function App() {
+  const [session, setSession] = useState(null);
   const [currentView, setCurrentView] = useState('home');
   const [theme, setTheme] = useState(localStorage.getItem('moodsnap-theme') || 'dark');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -20,10 +24,24 @@ function App() {
   const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5001/api';
 
   useEffect(() => {
-    fetchHistory();
+    // Check current session
+    supabase.auth.getSession().then(({ data: { session: activeSession } }) => {
+      setSession(activeSession);
+      if (activeSession) fetchHistory(activeSession);
+    });
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, newSession) => {
+      setSession(newSession);
+      if (newSession) fetchHistory(newSession);
+      else setHeatmapData([]); // Clear data on logout
+    });
+
     // Apply theme on mount
     document.documentElement.classList.toggle('light-mode', theme === 'light');
-  }, []);
+
+    return () => subscription.unsubscribe();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const toggleTheme = () => {
     const newTheme = theme === 'dark' ? 'light' : 'dark';
@@ -32,9 +50,14 @@ function App() {
     document.documentElement.classList.toggle('light-mode', newTheme === 'light');
   };
 
-  const fetchHistory = async () => {
+  const fetchHistory = async (activeSession = session) => {
+    if (!activeSession) return;
     try {
-      const response = await fetch(`${API_BASE_URL}/history`);
+      const response = await fetch(`${API_BASE_URL}/history`, {
+        headers: {
+          'Authorization': `Bearer ${activeSession.access_token}`
+        }
+      });
       if (!response.ok) throw new Error('Failed to fetch history');
       const data = await response.json();
       setHeatmapData(data);
@@ -44,6 +67,7 @@ function App() {
   };
 
   const handleSubmit = async (text) => {
+    if (!session) return;
     setIsSubmitting(true);
     setCurrentResult(null);
     setSelectedEntry(null);
@@ -52,7 +76,10 @@ function App() {
     try {
       const response = await fetch(`${API_BASE_URL}/mood`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`
+        },
         body: JSON.stringify({ text }),
       });
 
@@ -73,6 +100,10 @@ function App() {
   };
 
   const renderView = () => {
+    if (!session) {
+      return <Auth onAuthSuccess={setSession} />;
+    }
+
     if (selectedEntry) {
       return (
         <div className="history-view">
@@ -121,7 +152,7 @@ function App() {
           <div className="view-container dashboard-view animated">
             <div className="dashboard-grid">
               <div className="dashboard-main">
-                <WeeklySummary apiUrl={API_BASE_URL} />
+                <WeeklySummary apiUrl={API_BASE_URL} session={session} />
                 <Analytics data={heatmapData} />
               </div>
               <aside className="dashboard-sidebar glass-panel">
@@ -135,9 +166,11 @@ function App() {
         return (
           <div className="view-container profile-page animated">
             <ProfileView
+              user={session.user}
               heatmapData={heatmapData}
               theme={theme}
               onToggleTheme={toggleTheme}
+              onLogout={() => supabase.auth.signOut()}
             />
           </div>
         );
@@ -149,6 +182,7 @@ function App() {
   return (
     <div className="App">
       <Navbar
+        session={session}
         currentView={currentView}
         onViewChange={setCurrentView}
         theme={theme}

@@ -54,22 +54,49 @@ if (!groq) {
     console.log('✅ Groq API is configured and ready.');
 }
 
+// Authentication Middleware
+const authenticateUser = async (req, res, next) => {
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return res.status(401).json({ message: 'Authentication required' });
+    }
+
+    const token = authHeader.split(' ')[1];
+    try {
+        if (!supabase) throw new Error('Supabase not configured');
+
+        const { data: { user }, error } = await supabase.auth.getUser(token);
+
+        if (error || !user) {
+            return res.status(401).json({ message: 'Invalid or expired token' });
+        }
+
+        req.user = user;
+        next();
+    } catch (error) {
+        console.error('Auth Middleware Error:', error);
+        res.status(401).json({ message: 'Authentication failed' });
+    }
+};
+
 // Endpoint to analyze mood
-app.post('/api/mood', async (req, res) => {
+app.post('/api/mood', authenticateUser, async (req, res) => {
     const { text } = req.body;
-    console.log(`--- NEW MOOD SUBMISSION: "${text}" ---`);
+    const userId = req.user.id;
+    console.log(`--- NEW MOOD SUBMISSION [User: ${userId}]: "${text}" ---`);
 
     if (!text || text.trim().length === 0) {
         return res.status(400).json({ message: 'How are you feeling? Please enter some text.' });
     }
 
     try {
-        // Fetch last 5 tips to ensure uniqueness (Smart Tips feature)
+        // Fetch last 5 tips for THIS user to ensure uniqueness
         let pastTips = [];
         if (supabase) {
             const { data: recentEntries } = await supabase
                 .from('mood_entries')
                 .select('tip')
+                .eq('user_id', userId)
                 .order('created_at', { ascending: false })
                 .limit(5);
 
@@ -84,36 +111,26 @@ app.post('/api/mood', async (req, res) => {
 
         let result;
 
-        // 1. Try Groq (Fast & Free)
+        // AI logic remains same...
         if (groq) {
             try {
-                console.log('Calling Groq AI...');
                 const response = await groq.chat.completions.create({
                     messages: [
                         {
                             role: "system",
                             content: `You are a mental wellness assistant. Analyze the user's emotion and provide a structured JSON response with exactly: emotion (label), emoji (single), message (empathetic one-liner), and tip (small actionable step). ${uniquenessInstruction}`
                         },
-                        {
-                            role: "user",
-                            content: text
-                        }
+                        { role: "user", content: text }
                     ],
                     model: "llama-3.3-70b-versatile",
                     response_format: { type: "json_object" }
                 });
-
                 result = JSON.parse(response.choices[0].message.content);
-                console.log('Groq Parsed Result:', result);
-            } catch (groqError) {
-                console.error('Groq Specific Error:', groqError);
-            }
+            } catch (err) { console.error('Groq Error'); }
         }
 
-        // 2. Try OpenAI if Groq fails or is not configured
         if (!result && openai) {
             try {
-                console.log('Calling OpenAI...');
                 const response = await openai.chat.completions.create({
                     model: "gpt-3.5-turbo",
                     messages: [
@@ -121,64 +138,34 @@ app.post('/api/mood', async (req, res) => {
                             role: "system",
                             content: `You are a mental wellness assistant. Analyze the user's emotion and provide a structured JSON response with exactly: emotion (label), emoji (single), message (empathetic one-liner), and tip (small actionable step). ${uniquenessInstruction}`
                         },
-                        {
-                            role: "user",
-                            content: text
-                        }
+                        { role: "user", content: text }
                     ],
                     response_format: { type: "json_object" }
                 });
-
                 result = JSON.parse(response.choices[0].message.content);
-                console.log('OpenAI Parsed Result:', result);
-            } catch (oaError) {
-                console.error('OpenAI Specific Error:', oaError);
-            }
+            } catch (err) { console.error('OpenAI Error'); }
         }
 
-        // 3. Try Gemini
         if (!result && genAI) {
             try {
-                console.log('Calling Gemini AI...');
                 const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
-                const prompt = `
-            Analyze the following text and determine the user's emotion.
-            Return a structured JSON response with exactly these fields:
-            - emotion (one word label like calm, happy, sad, anxious, stressed, exhausted, etc.)
-            - emoji (a single matching emoji)
-            - message (a one-line empathetic message acknowledging the user's feeling)
-            - tip (one small actionable thing they can do right now to feel better or maintain the mood)
-
-            ${uniquenessInstruction}
-
-            Text: "${text}"
-          `;
-
+                const prompt = `Analyze: "${text}". JSON: emotion, emoji, message, tip. ${uniquenessInstruction}`;
                 const aiResponse = await model.generateContent(prompt);
-                const fullResponse = aiResponse.response.text();
-                const jsonStr = fullResponse.replace(/```json/g, '').replace(/```/g, '').trim();
+                const jsonStr = aiResponse.response.text().replace(/```json/g, '').replace(/```/g, '').trim();
                 result = JSON.parse(jsonStr);
-                console.log('Gemini Parsed Result:', result);
-            } catch (aiError) {
-                console.error('Gemini Specific Error:', aiError);
-            }
+            } catch (err) { console.error('Gemini Error'); }
         }
 
-        // Fallback
         if (!result) {
-            result = {
-                emotion: 'neutral',
-                emoji: '☁️',
-                message: 'I am here to listen, though my AI pathways are currently disconnected.',
-                tip: 'Take a deep breath and remember you are doing your best.'
-            };
+            result = { emotion: 'neutral', emoji: '☁️', message: 'I am here to listen.', tip: 'Take a deep breath.' };
         }
 
-        // Save to Supabase
+        // Save to Supabase with user_id
         if (supabase) {
             const { error } = await supabase
                 .from('mood_entries')
                 .insert([{
+                    user_id: userId,
                     user_input: text,
                     emotion: result.emotion,
                     emoji: result.emoji,
@@ -187,30 +174,29 @@ app.post('/api/mood', async (req, res) => {
                     created_at: new Date().toISOString()
                 }]);
 
-            if (error) console.error('Supabase Error:', error);
+            if (error) console.error('Supabase Save Error:', error);
         }
 
         res.json(result);
     } catch (error) {
         console.error('API Error:', error);
-        res.status(500).json({ message: 'Failed to analyze mood. Please try again.' });
+        res.status(500).json({ message: 'Failed to analyze mood.' });
     }
 });
 
-app.get('/api/history', async (req, res) => {
+app.get('/api/history', authenticateUser, async (req, res) => {
+    const userId = req.user.id;
     try {
-        if (!supabase) {
-            return res.json([]);
-        }
+        if (!supabase) return res.json([]);
 
         const { data, error } = await supabase
             .from('mood_entries')
             .select('*')
+            .eq('user_id', userId)
             .order('created_at', { ascending: false })
             .limit(100);
 
         if (error) throw error;
-
         res.json(data);
     } catch (error) {
         console.error('History Error:', error);
@@ -218,10 +204,10 @@ app.get('/api/history', async (req, res) => {
     }
 });
 
-// Endpoint to generate weekly summary
-app.get('/api/summary', async (req, res) => {
+app.get('/api/summary', authenticateUser, async (req, res) => {
+    const userId = req.user.id;
     try {
-        if (!supabase) return res.json({ summary: "Connect Supabase to see your weekly summary!" });
+        if (!supabase) return res.json({ summary: "Connect Supabase!" });
 
         const sevenDaysAgo = new Date();
         sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
@@ -229,6 +215,7 @@ app.get('/api/summary', async (req, res) => {
         const { data: entries, error } = await supabase
             .from('mood_entries')
             .select('emotion, created_at, user_input')
+            .eq('user_id', userId)
             .gte('created_at', sevenDaysAgo.toISOString())
             .order('created_at', { ascending: true });
 
@@ -238,36 +225,23 @@ app.get('/api/summary', async (req, res) => {
         }
 
         const historyContext = entries.map(e => `[${e.created_at.split('T')[0]}] ${e.emotion}: ${e.user_input}`).join('\n');
-        const summaryPrompt = `
-            You are a compassionate wellness coach. Below is a user's mood history for the past week:
-            ${historyContext}
-
-            Write a short, personal summary paragraph (max 3-4 sentences) about their week. 
-            Identify trends, acknowledge their struggles, and highlight positive moments. 
-            Be empathetic and encouraging. Use "you" language.
-        `;
+        const summaryPrompt = `Personalized mood history for the past week:\n${historyContext}\nWrite a 3-4 sentence compassionate summary paragraph using "you" language.`;
 
         let summary;
-
+        // AI Logic for summary...
         if (groq) {
-            const response = await groq.chat.completions.create({
-                messages: [{ role: "user", content: summaryPrompt }],
-                model: "llama-3.3-70b-versatile"
-            });
-            summary = response.choices[0].message.content;
+            const resp = await groq.chat.completions.create({ messages: [{ role: "user", content: summaryPrompt }], model: "llama-3.3-70b-versatile" });
+            summary = resp.choices[0].message.content;
         } else if (openai) {
-            const response = await openai.chat.completions.create({
-                model: "gpt-3.5-turbo",
-                messages: [{ role: "user", content: summaryPrompt }]
-            });
-            summary = response.choices[0].message.content;
+            const resp = await openai.chat.completions.create({ model: "gpt-3.5-turbo", messages: [{ role: "user", content: summaryPrompt }] });
+            summary = resp.choices[0].message.content;
         } else if (genAI) {
             const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
-            const aiResponse = await model.generateContent(summaryPrompt);
-            summary = aiResponse.response.text();
+            const resp = await model.generateContent(summaryPrompt);
+            summary = resp.response.text();
         }
 
-        res.json({ summary: summary || "Our AI is taking a rest. Check back later!" });
+        res.json({ summary: summary || "AI is restin'." });
     } catch (error) {
         console.error('Summary Error:', error);
         res.status(500).json({ message: 'Failed to generate summary.' });
