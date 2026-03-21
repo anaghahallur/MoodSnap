@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import './TherapyContainer.css';
 
 // Lazy load or import games
-import BubbleBreathing from './games/BubbleBreathing';
+// import BubbleBreathing from './games/BubbleBreathing'; // Alternative for anxiety
 import SandDrawing from './games/SandDrawing';
 import GratitudeJar from './games/GratitudeJar';
 import BubblePopper from './games/BubblePopper';
 import FocusFlow from './games/FocusFlow';
 import GratitudeAmplifier from './games/GratitudeAmplifier';
 import StretchGuide from './games/StretchGuide';
+import GroundingGame from './games/GroundingGame';
 
 const TherapyContainer = ({ emotion }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -19,9 +20,9 @@ const TherapyContainer = ({ emotion }) => {
         switch (true) {
             case emo.includes('anxious') || emo.includes('anxiety') || emo.includes('worry') || emo.includes('panick'):
                 return {
-                    component: <BubbleBreathing />,
-                    title: 'Calm Breathing',
-                    subtitle: 'Pop circles in rhythm with your breath.'
+                    component: <GroundingGame />,
+                    title: '5-4-3-2-1 Grounding',
+                    subtitle: 'Reconnect with your senses to ease anxiety.'
                 };
             case emo.includes('stress') || emo.includes('frustrat') || emo.includes('overwork') || emo.includes('burnt'):
                 return {

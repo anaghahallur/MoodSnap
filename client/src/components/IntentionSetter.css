@@ -1,0 +1,95 @@
+.intention-setter-container {
+    padding: 15px 25px;
+    margin-bottom: 30px;
+    width: 100%;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.intention-form {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+
+.intention-input-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.intention-prompt {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.intention-input {
+    background: none;
+    border: none;
+    border-bottom: 2px solid var(--glass-border);
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    padding: 8px 0;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.intention-input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+.intention-submit-btn {
+    background: var(--primary-gradient);
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 100px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.intention-submit-btn:disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+
+.intention-display {
+    padding: 15px 25px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-left: 4px solid var(--accent-color);
+}
+
+.intention-display p {
+    margin: 0;
+    color: var(--text-primary);
+    font-size: 1.1rem;
+}
+
+.intention-display strong {
+    color: var(--accent-color);
+}
+
+.intention-icon {
+    font-size: 1.2rem;
+}
+
+@media (max-width: 600px) {
+    .intention-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .intention-submit-btn {
+        width: 100%;
+    }
+}

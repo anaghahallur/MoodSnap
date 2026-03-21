@@ -7,6 +7,10 @@ import WeeklySummary from './components/WeeklySummary';
 import Analytics from './components/Analytics';
 import Navbar from './components/Navbar';
 import ProfileView from './components/ProfileView';
+import PatternInsight from './components/PatternInsight';
+import MonthlyReport from './components/MonthlyReport';
+import IntentionSetter from './components/IntentionSetter';
+import CommunityMood from './components/CommunityMood';
 
 import { supabase } from './supabaseClient';
 import Auth from './components/Auth';
@@ -135,6 +139,7 @@ function App() {
               <h1>Welcome Back</h1>
               <p>How are you feeling right now?</p>
             </header>
+            <IntentionSetter apiUrl={API_BASE_URL} session={session} />
             <MoodInput onSubmit={handleSubmit} isSubmitting={isSubmitting} />
             <div className="result-container">
               {error && (
@@ -152,12 +157,17 @@ function App() {
           <div className="view-container dashboard-view animated">
             <div className="dashboard-grid">
               <div className="dashboard-main">
+                <PatternInsight apiUrl={API_BASE_URL} session={session} />
                 <WeeklySummary apiUrl={API_BASE_URL} session={session} />
                 <Analytics data={heatmapData} />
               </div>
               <aside className="dashboard-sidebar glass-panel">
                 <h3>Mood Journal</h3>
                 <HeatMap data={heatmapData} onSelectEntry={setSelectedEntry} />
+                <div style={{ marginTop: '30px' }}>
+                  <MonthlyReport apiUrl={API_BASE_URL} session={session} />
+                </div>
+                <CommunityMood apiUrl={API_BASE_URL} />
               </aside>
             </div>
           </div>

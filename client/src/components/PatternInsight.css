@@ -1,0 +1,98 @@
+.pattern-insight-card {
+    padding: 24px;
+    margin-bottom: 24px;
+    border-left: 4px solid var(--accent-color);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pattern-insight-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px var(--accent-glow);
+}
+
+.insight-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.insight-icon {
+    font-size: 1.2rem;
+}
+
+.insight-header h4 {
+    margin: 0;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+.insight-text {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: var(--text-primary);
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.insight-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.insight-badge {
+    background: var(--accent-color);
+    color: white;
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.insight-meta {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+/* Skeleton Loading */
+.pattern-insight-card.loading {
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+}
+
+.skeleton-line {
+    height: 20px;
+    background: linear-gradient(90deg, var(--glass-highlight) 0%, var(--glass-bg) 50%, var(--glass-highlight) 100%);
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.5s infinite linear;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.skeleton-line.short {
+    width: 60%;
+}
+
+@keyframes skeleton-shimmer {
+    from {
+        background-position: 200% 0;
+    }
+
+    to {
+        background-position: -200% 0;
+    }
+}
+
+/* Light mode overrides if needed */
+:root.light-mode .pattern-insight-card {
+    border-left-width: 6px;
+}
