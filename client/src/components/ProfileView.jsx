@@ -1,7 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { supabase } from '../supabaseClient';
 import './ProfileView.css';
 
 const ProfileView = ({ user, heatmapData, theme, onToggleTheme, onLogout }) => {
+    const [isEditing, setIsEditing] = useState(false);
+    const [newName, setNewName] = useState(user?.user_metadata?.full_name || '');
+    const [isSaving, setIsSaving] = useState(false);
+
+    const displayName = user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'User Account';
+
+    const handleSaveName = async () => {
+        if (!newName.trim()) {
+            setIsEditing(false);
+            return;
+        }
+        setIsSaving(true);
+        try {
+            const { error } = await supabase.auth.updateUser({
+                data: { full_name: newName.trim() }
+            });
+            if (error) throw error;
+            setIsEditing(false);
+        } catch (err) {
+            console.error('Error updating name:', err);
+        } finally {
+            setIsSaving(false);
+        }
+    };
+
     const totalEntries = heatmapData.length;
     const emotions = heatmapData.reduce((acc, curr) => {
         acc[curr.emotion] = (acc[curr.emotion] || 0) + 1;
@@ -24,10 +50,35 @@ const ProfileView = ({ user, heatmapData, theme, onToggleTheme, onLogout }) => {
             <div className="profile-card glass-panel">
                 <div className="profile-header">
                     <div className="profile-avatar">
-                        {user?.email?.[0].toUpperCase() || '👤'}
+                        {displayName[0].toUpperCase()}
                     </div>
-                    <h2>{user?.email || 'User Account'}</h2>
-                    <p className="profile-since">Member since {new Date(user?.created_at).toLocaleDateString()}</p>
+                    <div className="profile-name-section">
+                        {isEditing ? (
+                            <div className="name-edit-group">
+                                <input
+                                    type="text"
+                                    value={newName}
+                                    onChange={(e) => setNewName(e.target.value)}
+                                    className="name-edit-input"
+                                    placeholder="Enter your name"
+                                    disabled={isSaving}
+                                    autoFocus
+                                />
+                                <button className="name-save-btn" onClick={handleSaveName} disabled={isSaving}>
+                                    {isSaving ? '...' : 'Save'}
+                                </button>
+                                <button className="name-cancel-btn" onClick={() => setIsEditing(false)} disabled={isSaving}>
+                                    ✕
+                                </button>
+                            </div>
+                        ) : (
+                            <div className="name-display-group">
+                                <h2>{displayName}</h2>
+                                <button className="name-edit-icon" onClick={() => setIsEditing(true)}>✎</button>
+                            </div>
+                        )}
+                        <p className="profile-since">Member since {new Date(user?.created_at).toLocaleDateString()}</p>
+                    </div>
                 </div>
             </div>
 

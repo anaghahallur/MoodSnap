@@ -26,10 +26,76 @@
     align-items: center;
 }
 
-.profile-info h2 {
+.profile-name-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.name-display-group {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.name-display-group h2 {
     margin: 0;
     font-size: 2rem;
     color: var(--text-primary);
+}
+
+.name-edit-icon {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: all 0.2s ease;
+    padding: 0;
+}
+
+.name-display-group:hover .name-edit-icon,
+.name-edit-icon:hover {
+    opacity: 1;
+    color: var(--accent-color);
+}
+
+.name-edit-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.name-edit-input {
+    background: var(--glass-bg);
+    border: 1px solid var(--accent-color);
+    color: var(--text-primary);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-md);
+    font-size: 1.2rem;
+    font-family: inherit;
+    outline: none;
+}
+
+.name-save-btn {
+    background: var(--primary-gradient);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.name-cancel-btn {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--glass-border);
+    padding: 0.5rem 0.8rem;
+    border-radius: var(--radius-md);
+    cursor: pointer;
 }
 
 .profile-stat-summary {
