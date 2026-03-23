@@ -44,6 +44,48 @@
   --nav-bg: rgba(255, 255, 255, 0.8);
 }
 
+:root[data-theme='forest'] {
+  --accent-color: #10b981;
+  --accent-hover: #059669;
+  --accent-glow: rgba(16, 185, 129, 0.4);
+  --primary-gradient: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+}
+
+:root[data-theme='forest'].light-mode {
+  --accent-color: #059669;
+  --accent-hover: #047857;
+  --accent-glow: rgba(5, 150, 105, 0.2);
+  --primary-gradient: linear-gradient(135deg, #059669 0%, #10b981 100%);
+}
+
+:root[data-theme='sunset'] {
+  --accent-color: #f59e0b;
+  --accent-hover: #d97706;
+  --accent-glow: rgba(245, 158, 11, 0.4);
+  --primary-gradient: linear-gradient(135deg, #f59e0b 0%, #f43f5e 100%);
+}
+
+:root[data-theme='sunset'].light-mode {
+  --accent-color: #d97706;
+  --accent-hover: #b45309;
+  --accent-glow: rgba(217, 119, 6, 0.2);
+  --primary-gradient: linear-gradient(135deg, #d97706 0%, #e11d48 100%);
+}
+
+:root[data-theme='rose'] {
+  --accent-color: #ec4899;
+  --accent-hover: #db2777;
+  --accent-glow: rgba(236, 72, 153, 0.4);
+  --primary-gradient: linear-gradient(135deg, #ec4899 0%, #a855f7 100%);
+}
+
+:root[data-theme='rose'].light-mode {
+  --accent-color: #db2777;
+  --accent-hover: #be185d;
+  --accent-glow: rgba(219, 39, 119, 0.2);
+  --primary-gradient: linear-gradient(135deg, #db2777 0%, #9333ea 100%);
+}
+
 * {
   box-sizing: border-box;
   margin: 0;

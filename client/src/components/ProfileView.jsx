@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { supabase } from '../supabaseClient';
 import './ProfileView.css';
 
-const ProfileView = ({ user, heatmapData, theme, onToggleTheme, onLogout }) => {
+const ProfileView = ({ user, heatmapData, theme, onToggleTheme, accentTheme, onChangeAccentTheme, onLogout }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [newName, setNewName] = useState(user?.user_metadata?.full_name || '');
     const [isSaving, setIsSaving] = useState(false);
@@ -26,6 +26,37 @@ const ProfileView = ({ user, heatmapData, theme, onToggleTheme, onLogout }) => {
         } finally {
             setIsSaving(false);
         }
+    };
+
+    const handleExportData = () => {
+        if (!heatmapData || heatmapData.length === 0) {
+            alert('No mood data to export yet!');
+            return;
+        }
+
+        const headers = ["Date", "Time", "Mood", "Intensity", "Note"];
+
+        const rows = heatmapData.map(entry => {
+            const dateObj = new Date(entry.created_at);
+            const date = dateObj.toLocaleDateString();
+            const time = dateObj.toLocaleTimeString();
+            const mood = entry.emotion;
+            const intensity = entry.intensity;
+            const note = entry.note ? `"${entry.note.replace(/"/g, '""')}"` : "";
+            return [date, time, mood, intensity, note].join(',');
+        });
+
+        const csvContent = [headers.join(','), ...rows].join('\n');
+
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement("a");
+        const url = URL.createObjectURL(blob);
+        link.setAttribute("href", url);
+        link.setAttribute("download", "MoodSnap_Export.csv");
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     };
 
     const totalEntries = heatmapData.length;
@@ -99,10 +130,21 @@ const ProfileView = ({ user, heatmapData, theme, onToggleTheme, onLogout }) => {
 
             <div className="profile-settings glass-panel">
                 <h3>Settings</h3>
+
                 <div className="setting-item">
-                    <span>Daily Reminders</span>
-                    <button className="toggle-btn disabled">Off</button>
+                    <span>Accent Theme</span>
+                    <select
+                        className="theme-select-btn toggle-btn"
+                        value={accentTheme}
+                        onChange={(e) => onChangeAccentTheme(e.target.value)}
+                    >
+                        <option value="ocean">Ocean</option>
+                        <option value="forest">Forest</option>
+                        <option value="sunset">Sunset</option>
+                        <option value="rose">Rose</option>
+                    </select>
                 </div>
+
                 <div className="setting-item">
                     <span>Dark Mode</span>
                     <button
@@ -112,6 +154,12 @@ const ProfileView = ({ user, heatmapData, theme, onToggleTheme, onLogout }) => {
                         {theme === 'dark' ? 'On' : 'Off'}
                     </button>
                 </div>
+
+                <div className="setting-item">
+                    <span>Export Data</span>
+                    <button className="toggle-btn" onClick={handleExportData}>Download CSV</button>
+                </div>
+
                 <div className="setting-item logout-section">
                     <button className="logout-btn" onClick={onLogout}>
                         Sign Out

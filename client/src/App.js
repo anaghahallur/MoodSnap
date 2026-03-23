@@ -19,6 +19,7 @@ function App() {
   const [session, setSession] = useState(null);
   const [currentView, setCurrentView] = useState('home');
   const [theme, setTheme] = useState(localStorage.getItem('moodsnap-theme') || 'dark');
+  const [accentTheme, setAccentTheme] = useState(localStorage.getItem('moodsnap-accent') || 'ocean');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [currentResult, setCurrentResult] = useState(null);
   const [heatmapData, setHeatmapData] = useState([]);
@@ -43,6 +44,7 @@ function App() {
 
     // Apply theme on mount
     document.documentElement.classList.toggle('light-mode', theme === 'light');
+    document.documentElement.setAttribute('data-theme', accentTheme);
 
     return () => subscription.unsubscribe();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -52,6 +54,12 @@ function App() {
     setTheme(newTheme);
     localStorage.setItem('moodsnap-theme', newTheme);
     document.documentElement.classList.toggle('light-mode', newTheme === 'light');
+  };
+
+  const changeAccentTheme = (newTheme) => {
+    setAccentTheme(newTheme);
+    localStorage.setItem('moodsnap-accent', newTheme);
+    document.documentElement.setAttribute('data-theme', newTheme);
   };
 
   const fetchHistory = async (activeSession = session) => {
@@ -180,6 +188,8 @@ function App() {
               heatmapData={heatmapData}
               theme={theme}
               onToggleTheme={toggleTheme}
+              accentTheme={accentTheme}
+              onChangeAccentTheme={changeAccentTheme}
               onLogout={() => supabase.auth.signOut()}
             />
           </div>

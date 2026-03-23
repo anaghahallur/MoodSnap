@@ -173,6 +173,18 @@
     border-color: var(--accent-color);
 }
 
+.theme-select-btn {
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: var(--glass-bg);
+    text-align: center;
+}
+
+.theme-select-btn option {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+}
+
 .toggle-btn.disabled {
     background: var(--glass-bg);
     color: var(--text-secondary);
