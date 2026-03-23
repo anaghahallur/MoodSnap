@@ -97,6 +97,10 @@ function App() {
 
       if (!response.ok) {
         const errorData = await response.json();
+        if (errorData.supabase_error) {
+          console.error("RAW BACKEND AUTH ERROR:", errorData);
+          throw new Error(`Auth Error: ${errorData.supabase_error}`);
+        }
         throw new Error(errorData.message || 'Something went wrong');
       }
 
