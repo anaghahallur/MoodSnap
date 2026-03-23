@@ -246,6 +246,17 @@
     border-color: var(--error-color);
 }
 
+.profile-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    animation: fade-in 0.5s ease-out;
+    width: 100%;
+}
+
 @keyframes fade-in {
     from {
         opacity: 0;
@@ -259,6 +270,11 @@
 }
 
 @media (max-width: 600px) {
+    .profile-container {
+        padding: 1rem;
+        gap: 1.5rem;
+    }
+
     .profile-header {
         flex-direction: column;
         text-align: center;
@@ -266,5 +282,32 @@
 
     .profile-stats-grid {
         grid-template-columns: 1fr;
+    }
+
+    .setting-item {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+    }
+
+    .theme-color-picker {
+        justify-content: space-around;
+        width: 100%;
+    }
+
+    .theme-circle {
+        width: 34px;
+        /* Slightly larger on mobile for hit targets */
+        height: 34px;
+    }
+
+    .toggle-btn {
+        width: 100%;
+        text-align: center;
+        padding: 0.8rem;
+    }
+
+    .logout-btn {
+        width: 100%;
     }
 }
