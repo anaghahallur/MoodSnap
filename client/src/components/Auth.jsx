@@ -18,6 +18,11 @@ const Auth = ({ onAuthSuccess }) => {
                 provider: 'google',
             });
             if (error) throw error;
+
+            // If the browser blocks the redirect (common in Vercel previews), unfreeze the UI after 3s
+            setTimeout(() => {
+                setLoading(false);
+            }, 3000);
         } catch (err) {
             setError(err.message);
             setLoading(false);
