@@ -4,6 +4,8 @@ Your AI-Powered Mental Wellness Companion
 ![MoodSnap Overview](https://img.shields.io/badge/Status-Live_in_Production-success?style=for-the-badge) ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
 
 ## Overview
+🚀 **Live Application**: [https://mood-snap-virid.vercel.app/](https://mood-snap-virid.vercel.app/)
+
 MoodSnap is a sophisticated, full-stack web application designed to help users track, analyze, and improve their mental wellbeing. Beyond simple journaling, MoodSnap uses Artificial Intelligence to analyze emotional patterns, offers interactive therapeutic mini-games, and provides a beautiful, premium glassmorphic interface that adapts perfectly across all devices.
 
 ---
