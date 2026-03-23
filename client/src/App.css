@@ -203,6 +203,11 @@ body {
 }
 
 @media (max-width: 768px) {
+  .app-main {
+    padding: 0 1rem 3rem;
+    margin: 1rem auto;
+  }
+
   .view-intro h1 {
     font-size: 2.2rem;
   }

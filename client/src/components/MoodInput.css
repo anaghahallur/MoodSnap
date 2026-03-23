@@ -107,3 +107,14 @@
         transform: rotate(360deg);
     }
 }
+
+@media (max-width: 600px) {
+    .mood-input-container {
+        padding: 1.5rem 1rem;
+        gap: 1rem;
+    }
+
+    .mood-textarea {
+        font-size: 1.1rem;
+    }
+}
