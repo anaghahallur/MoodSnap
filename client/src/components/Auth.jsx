@@ -14,17 +14,25 @@ const Auth = ({ onAuthSuccess }) => {
         setLoading(true);
         setError(null);
         try {
-            const { error } = await supabase.auth.signInWithOAuth({
+            const { data, error } = await supabase.auth.signInWithOAuth({
                 provider: 'google',
+                options: {
+                    redirectTo: window.location.origin,
+                }
             });
             if (error) throw error;
 
-            // If the browser blocks the redirect (common in Vercel previews), unfreeze the UI after 3s
+            if (data?.url) {
+                window.location.href = data.url;
+            }
+
+            // If the browser blocks the redirect (common in Vercel previews), unfreeze the UI after 5s
             setTimeout(() => {
                 setLoading(false);
-            }, 3000);
+            }, 5000);
         } catch (err) {
             setError(err.message);
+            alert("Auth Error: " + err.message);
             setLoading(false);
         }
     };
