@@ -131,18 +131,19 @@ const ProfileView = ({ user, heatmapData, theme, onToggleTheme, accentTheme, onC
             <div className="profile-settings glass-panel">
                 <h3>Settings</h3>
 
-                <div className="setting-item">
+                <div className="setting-item theme-setting">
                     <span>Accent Theme</span>
-                    <select
-                        className="theme-select-btn toggle-btn"
-                        value={accentTheme}
-                        onChange={(e) => onChangeAccentTheme(e.target.value)}
-                    >
-                        <option value="ocean">Ocean</option>
-                        <option value="forest">Forest</option>
-                        <option value="sunset">Sunset</option>
-                        <option value="rose">Rose</option>
-                    </select>
+                    <div className="theme-color-picker">
+                        {['ocean', 'forest', 'sunset', 'rose'].map(t => (
+                            <button
+                                key={t}
+                                className={`theme-circle ${t} ${accentTheme === t ? 'active' : ''}`}
+                                onClick={() => onChangeAccentTheme(t)}
+                                aria-label={`${t} theme`}
+                                title={t.charAt(0).toUpperCase() + t.slice(1)}
+                            />
+                        ))}
+                    </div>
                 </div>
 
                 <div className="setting-item">
