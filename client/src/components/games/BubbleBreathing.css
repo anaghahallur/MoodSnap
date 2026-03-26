@@ -24,21 +24,10 @@
     transition: all 0.5s ease;
 }
 
-.phase-text.inhale {
-    color: #55efc4;
-}
-
-.phase-text.hold {
-    color: #81ecec;
-}
-
-.phase-text.exhale {
-    color: #74b9ff;
-}
-
-.phase-text.pause {
-    color: #a29bfe;
-}
+.phase-text.inhale { color: var(--accent-color); }
+.phase-text.hold { color: var(--text-primary); }
+.phase-text.exhale { color: var(--text-secondary); }
+.phase-text.pause { color: var(--accent-color); opacity: 0.7; }
 
 .seconds-text {
     font-size: 1rem;
@@ -50,10 +39,10 @@
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.1);
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    background: var(--glass-bg);
+    border: 2px solid var(--glass-border);
     position: relative;
-    transition: transform 4s linear, background 0.5s ease;
+    transition: transform 4s linear, background 0.5s ease, border-color 0.5s ease;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -61,26 +50,26 @@
 
 .breathing-circle.inhale {
     transform: scale(2.5);
-    background: rgba(85, 239, 196, 0.2);
-    border-color: #55efc4;
+    background: var(--glass-highlight);
+    border-color: var(--accent-color);
 }
 
 .breathing-circle.hold {
     transform: scale(2.5);
-    background: rgba(129, 236, 236, 0.2);
-    border-color: #81ecec;
+    background: var(--glass-bg);
+    border-color: var(--text-primary);
 }
 
 .breathing-circle.exhale {
     transform: scale(1);
-    background: rgba(116, 185, 255, 0.2);
-    border-color: #74b9ff;
+    background: var(--glass-highlight);
+    border-color: var(--text-secondary);
 }
 
 .breathing-circle.pause {
     transform: scale(1);
-    background: rgba(162, 155, 254, 0.2);
-    border-color: #a29bfe;
+    background: var(--glass-bg);
+    border-color: var(--accent-color);
 }
 
 .inner-glow {
@@ -88,8 +77,8 @@
     height: 60%;
     border-radius: 50%;
     filter: blur(15px);
-    background: white;
-    opacity: 0.3;
+    background: var(--text-primary);
+    opacity: 0.15;
 }
 
 .bubbles-container {
@@ -105,9 +94,9 @@
     position: absolute;
     bottom: -50px;
     border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1));
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     animation: float-up linear forwards;
     cursor: pointer;
     pointer-events: auto;

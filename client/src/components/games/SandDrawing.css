@@ -42,7 +42,7 @@
 
 .clear-btn {
     padding: 0.3rem 0.8rem;
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--glass-bg);
     border: 1px solid var(--glass-border);
     color: var(--text-secondary);
     border-radius: var(--radius-sm);
@@ -52,7 +52,7 @@
 }
 
 .clear-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--glass-highlight);
     color: var(--text-primary);
 }
 

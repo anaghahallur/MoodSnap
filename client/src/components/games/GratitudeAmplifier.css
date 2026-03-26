@@ -27,7 +27,7 @@
 .amplifier-input {
     width: 100%;
     height: 120px;
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--glass-bg);
     border: 1px solid var(--glass-border);
     border-radius: var(--radius-sm);
     padding: 1rem;
@@ -39,19 +39,26 @@
 
 .amplifier-input:focus {
     outline: none;
-    border-color: var(--primary-accent);
-    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--accent-color);
+    background: var(--glass-highlight);
+    box-shadow: 0 0 10px var(--accent-glow);
 }
 
 .amplify-btn {
     padding: 0.8rem 1.5rem;
-    background: var(--primary-accent);
+    background: var(--accent-color);
     color: white;
     border: none;
     border-radius: var(--radius-sm);
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s;
+}
+
+.amplify-btn:hover {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px var(--accent-glow);
 }
 
 .amplifier-result {
@@ -74,7 +81,7 @@
 
 .result-content h3 {
     margin: 0;
-    color: var(--primary-accent);
+    color: var(--accent-color);
     font-size: 1.5rem;
 }
 
@@ -90,9 +97,9 @@
     line-height: 1.5;
     color: var(--text-secondary);
     padding: 1rem;
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--glass-bg);
     border-radius: var(--radius-sm);
-    border-left: 3px solid var(--primary-accent);
+    border-left: 3px solid var(--accent-color);
     text-align: left;
 }
 
@@ -103,6 +110,11 @@
     padding: 0.5rem 1rem;
     border-radius: var(--radius-sm);
     cursor: pointer;
+}
+
+.reset-btn:hover {
+    background: var(--glass-highlight);
+    color: var(--text-primary);
 }
 
 /* Confetti */
