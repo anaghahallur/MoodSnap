@@ -2,24 +2,13 @@
     opacity: 0;
     transform: translateY(20px);
     transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-    background: var(--glass-bg);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 var(--glass-highlight);
-    border-top-width: 2px;
+    background: var(--surface-container);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
     position: relative;
     overflow: hidden;
     padding: 3rem;
     width: 100%;
-}
-
-.result-card-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
-    opacity: 0.5;
 }
 
 .result-card-container.visible {
@@ -114,12 +103,12 @@
 .tip-container {
     display: flex;
     gap: 1rem;
-    background: var(--accent-glow);
-    border: 1px solid var(--glass-border);
-    border-radius: var(--radius-sm);
+    background: var(--surface-container-low);
+    border: none;
+    border-radius: var(--radius-md);
     padding: 1.25rem;
     opacity: 0;
-    animation: fade-up 0.5s ease forwards;
+    animation: fade-up 0.5s cubic-bezier(0.2, 0, 0, 1) forwards;
     animation-delay: 0.7s;
 }
 

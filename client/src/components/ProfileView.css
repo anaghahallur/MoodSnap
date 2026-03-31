@@ -18,8 +18,9 @@
     font-size: 4rem;
     width: 100px;
     height: 100px;
-    background: var(--glass-bg);
-    border: 2px solid var(--glass-border);
+    background: var(--surface-container-low);
+    border: none;
+    box-shadow: var(--shadow-md);
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -69,33 +70,51 @@
 }
 
 .name-edit-input {
-    background: var(--glass-bg);
-    border: 1px solid var(--accent-color);
+    background: var(--surface-container-low);
+    border: none;
+    border-bottom: 2px solid var(--accent-color);
     color: var(--text-primary);
     padding: 0.5rem 1rem;
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
     font-size: 1.2rem;
     font-family: inherit;
     outline: none;
+    transition: all var(--transition-fast);
+}
+
+.name-edit-input:focus {
+    background: var(--surface-container);
 }
 
 .name-save-btn {
-    background: var(--primary-gradient);
-    color: white;
+    background: var(--accent-color);
+    color: var(--primary-on);
     border: none;
     padding: 0.5rem 1rem;
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-full);
     cursor: pointer;
     font-weight: 600;
+    transition: all var(--transition-fast);
+}
+
+.name-save-btn:active {
+    transform: scale(0.95);
+    background: var(--accent-hover);
 }
 
 .name-cancel-btn {
     background: transparent;
     color: var(--text-secondary);
-    border: 1px solid var(--glass-border);
-    padding: 0.5rem 0.8rem;
-    border-radius: var(--radius-md);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-full);
     cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.name-cancel-btn:hover {
+    background: var(--hover-layer);
+    color: var(--text-primary);
 }
 
 .profile-stat-summary {
@@ -110,14 +129,21 @@
 }
 
 .stat-card {
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
+    background: var(--surface-container-low);
+    border: none;
+    box-shadow: var(--shadow-sm);
     padding: 1.5rem;
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-lg);
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 0.5rem;
+    transition: all var(--transition-normal);
+}
+
+.stat-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
 }
 
 .stat-value {
@@ -158,19 +184,28 @@
 
 .toggle-btn {
     padding: 0.4rem 1.2rem;
-    border-radius: 100px;
+    border-radius: var(--radius-full);
     border: 1px solid var(--glass-border);
     font-weight: 600;
     cursor: pointer;
     background: transparent;
     color: var(--text-secondary);
-    transition: all 0.3s ease;
+    transition: all var(--transition-fast);
+}
+
+.toggle-btn:hover {
+    background: var(--hover-layer);
+    color: var(--text-primary);
+}
+
+.toggle-btn:active {
+    transform: scale(0.95);
 }
 
 .toggle-btn.active {
     background: var(--accent-color);
-    color: white;
-    border-color: var(--accent-color);
+    color: var(--primary-on);
+    border: none;
 }
 
 .theme-color-picker {
@@ -221,29 +256,34 @@
 }
 
 .toggle-btn.disabled {
-    background: var(--glass-bg);
+    background: var(--surface-container-low);
     color: var(--text-secondary);
     opacity: 0.5;
     cursor: not-allowed;
+    border: none;
 }
 
 .logout-btn {
-    background: var(--glass-bg);
+    background: transparent;
     border: 1px solid var(--glass-border);
     color: var(--text-secondary);
     padding: 0.75rem 1.5rem;
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-full);
     cursor: pointer;
     font-size: 1rem;
     font-weight: 600;
-    transition: all 0.3s ease;
+    transition: all var(--transition-fast);
     margin-top: 1.5rem;
 }
 
 .logout-btn:hover {
-    background: var(--error-color);
-    color: white;
-    border-color: var(--error-color);
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--danger-color);
+    border-color: var(--danger-color);
+}
+
+.logout-btn:active {
+    transform: scale(0.95);
 }
 
 .profile-container {

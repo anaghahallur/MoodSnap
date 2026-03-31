@@ -1,16 +1,19 @@
 .mood-input-container {
-    padding: 2.5rem;
+    padding: 1.5rem 2rem;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
     max-width: 1000px;
     margin: 0 auto;
+    background: var(--surface-container-low);
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    border-bottom: 2px solid var(--glass-border);
+    transition: all var(--transition-fast);
 }
 
 .mood-input-container:focus-within {
-    border-color: var(--glass-highlight);
-    transform: translateY(-2px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1), 0 0 20px var(--accent-glow);
+    border-bottom-color: var(--accent-color);
+    background: var(--surface-container);
 }
 
 .mood-textarea {
@@ -44,7 +47,7 @@
 
 .mood-textarea::-webkit-scrollbar-thumb {
     background: var(--glass-border);
-    border-radius: 10px;
+    border-radius: var(--radius-full);
 }
 
 .input-footer {
@@ -52,26 +55,24 @@
     justify-content: space-between;
     align-items: center;
     padding-top: 0.5rem;
-    border-top: 1px solid var(--glass-border);
 }
 
 .helper-text {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     color: var(--text-secondary);
-    opacity: 0.7;
 }
 
 .submit-btn {
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    color: var(--text-primary);
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+    background: var(--surface-container);
+    color: var(--text-secondary);
+    width: 48px;
+    height: 48px;
+    border: none;
+    border-radius: var(--radius-full);
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
+    cursor: default;
     transition: all var(--transition-fast);
     opacity: 0.5;
 }
@@ -79,13 +80,18 @@
 .submit-btn.active {
     opacity: 1;
     background: var(--accent-color);
-    border-color: var(--accent-hover);
-    box-shadow: 0 0 15px var(--accent-glow);
+    color: var(--primary-on);
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
 }
 
 .submit-btn.active:hover {
     background: var(--accent-hover);
-    transform: scale(1.05);
+    box-shadow: var(--shadow-md);
+}
+
+.submit-btn.active:active {
+    transform: scale(0.95);
 }
 
 .submit-btn:disabled {
@@ -97,7 +103,7 @@
     width: 20px;
     height: 20px;
     border: 2px solid var(--glass-border);
-    border-radius: 50%;
+    border-radius: var(--radius-full);
     border-top-color: var(--accent-color);
     animation: spin 0.8s linear infinite;
 }

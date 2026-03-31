@@ -16,6 +16,7 @@
     background: var(--nav-bg);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--glass-border);
+    transition: all var(--transition-normal);
 }
 
 .nav-left {
@@ -28,11 +29,15 @@
     align-items: center;
     gap: 0.6rem;
     cursor: pointer;
-    transition: transform 0.2s;
+    transition: transform var(--transition-fast);
 }
 
 .nav-logo:hover {
     transform: scale(1.02);
+}
+
+.nav-logo:active {
+    transform: scale(0.95);
 }
 
 .logo-icon {
@@ -67,9 +72,9 @@
 .nav-center {
     display: flex;
     gap: 0.5rem;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 0.3rem;
-    border-radius: var(--radius-sm);
+    background: var(--surface-container-low);
+    padding: 4px;
+    border-radius: var(--radius-full);
 }
 
 .nav-link {
@@ -80,18 +85,23 @@
     font-size: 0.95rem;
     font-weight: 600;
     cursor: pointer;
-    border-radius: var(--radius-sm);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: var(--radius-full);
+    transition: all var(--transition-fast);
 }
 
 .nav-link:hover {
     color: var(--text-primary);
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--hover-layer);
+}
+
+.nav-link:active {
+    transform: scale(0.95);
+    background: var(--active-layer);
 }
 
 .nav-link.active {
-    color: var(--text-primary);
-    background: var(--primary-accent);
+    color: var(--primary-on);
+    background: var(--accent-color);
 }
 
 .nav-right {
@@ -106,23 +116,28 @@
     background: transparent;
     border: 1px solid var(--glass-border);
     color: var(--text-secondary);
-    padding: 0.5rem 1rem;
-    border-radius: var(--radius-md);
+    padding: 0.5rem 1.2rem;
+    border-radius: var(--radius-full);
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all var(--transition-fast);
     font-weight: 500;
 }
 
 .nav-profile:hover {
-    border-color: var(--primary-accent);
+    border-color: var(--accent-color);
     color: var(--text-primary);
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--hover-layer);
+}
+
+.nav-profile:active {
+    transform: scale(0.95);
+    background: var(--active-layer);
 }
 
 .nav-profile.active {
-    border-color: var(--primary-accent);
-    color: var(--primary-accent);
-    background: rgba(99, 102, 241, 0.1);
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+    background: var(--hover-layer);
 }
 
 .theme-toggle {
@@ -134,17 +149,21 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-full);
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all var(--transition-fast);
     margin-right: 0.5rem;
 }
 
 .theme-toggle:hover {
-    border-color: var(--primary-accent);
+    border-color: var(--accent-color);
     color: var(--text-primary);
-    background: rgba(255, 255, 255, 0.05);
-    transform: translateY(-2px);
+    background: var(--hover-layer);
+}
+
+.theme-toggle:active {
+    transform: scale(0.95);
+    background: var(--active-layer);
 }
 
 .theme-toggle svg {

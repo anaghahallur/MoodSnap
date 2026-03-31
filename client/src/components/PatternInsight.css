@@ -1,15 +1,17 @@
 .pattern-insight-card {
     padding: 24px;
     margin-bottom: 24px;
-    border-left: 4px solid var(--accent-color);
+    background: var(--surface-container-low);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
     position: relative;
     overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
 }
 
 .pattern-insight-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 25px var(--accent-glow);
+    box-shadow: var(--shadow-md);
 }
 
 .insight-header {
@@ -48,10 +50,10 @@
 
 .insight-badge {
     background: var(--accent-color);
-    color: white;
+    color: var(--primary-on);
     font-size: 0.75rem;
     padding: 4px 10px;
-    border-radius: 20px;
+    border-radius: var(--radius-full);
     font-weight: 600;
 }
 
@@ -90,9 +92,4 @@
     to {
         background-position: -200% 0;
     }
-}
-
-/* Light mode overrides if needed */
-:root.light-mode .pattern-insight-card {
-    border-left-width: 6px;
 }
