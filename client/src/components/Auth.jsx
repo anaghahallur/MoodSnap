@@ -3,6 +3,7 @@ import { supabase } from '../supabaseClient';
 import './Auth.css';
 
 const Auth = ({ onAuthSuccess }) => {
+    const [showAuth, setShowAuth] = useState(false);
     const [isLogin, setIsLogin] = useState(true);
     const [loading, setLoading] = useState(false);
     const [email, setEmail] = useState('');
@@ -26,7 +27,6 @@ const Auth = ({ onAuthSuccess }) => {
                 window.location.href = data.url;
             }
 
-            // If the browser blocks the redirect (common in Vercel previews), unfreeze the UI after 5s
             setTimeout(() => {
                 setLoading(false);
             }, 5000);
@@ -66,8 +66,60 @@ const Auth = ({ onAuthSuccess }) => {
         }
     };
 
+    const openAuth = (loginMode) => {
+        setIsLogin(loginMode);
+        setShowAuth(true);
+    };
+
+    if (!showAuth) {
+        return (
+            <div className="landing-container animated">
+                <nav className="landing-nav">
+                    <div className="landing-logo">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M23 19C23 19.5304 22.7893 20.0391 22.4142 20.4142C22.0391 20.7893 21.5304 21 21 21H3C2.46957 21 1.96086 20.7893 1.58579 20.4142C1.21071 20.0391 1 19.5304 1 19V8C1 7.46957 1.21071 6.96086 1.58579 6.58579C1.96086 6.21071 2.46957 6 3 6H7L9 3H15L17 6H21C21.5304 6 22.0391 6.21071 22.4142 6.58579C22.7893 6.96086 23 7.46957 23 8V19Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                            <circle cx="12" cy="13" r="4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                        <span>MoodSnap</span>
+                    </div>
+                    <div className="landing-nav-actions">
+                        <button className="landing-login-btn" onClick={() => openAuth(true)}>Log In</button>
+                        <button className="landing-signup-btn" onClick={() => openAuth(false)}>Sign Up</button>
+                    </div>
+                </nav>
+
+                <main className="landing-hero">
+                    <h1>Track Your Vibe.<br />Find Your Zen.</h1>
+                    <p>Your beautiful, AI-powered mental wellness companion. Log your moods, discover deep emotional patterns, and find balance with therapeutic mini-games.</p>
+                    <button className="landing-cta-btn" onClick={() => openAuth(false)}>Start Your Journey</button>
+                </main>
+
+                <section className="landing-features">
+                    <div className="feature-card">
+                        <div className="feature-icon">📝</div>
+                        <h3>Intelligent Tracking</h3>
+                        <p>Log your daily emotional states effortlessly in our meticulously crafted, distraction-free environment.</p>
+                    </div>
+                    <div className="feature-card">
+                        <div className="feature-icon">🧠</div>
+                        <h3>AI Pattern Recognition</h3>
+                        <p>Our advanced AI anonymously analyzes your entries over time to uncover deep emotional triggers and weekly trends.</p>
+                    </div>
+                    <div className="feature-card">
+                        <div className="feature-icon">🎮</div>
+                        <h3>Therapeutic Games</h3>
+                        <p>Ground yourself immediately with highly interactive breathing exercises, gratitude amplification, and sand canvases.</p>
+                    </div>
+                </section>
+            </div>
+        );
+    }
+
     return (
         <div className="auth-container animated">
+            <button className="landing-back-btn" onClick={() => setShowAuth(false)}>
+                ← Back to Home
+            </button>
             <div className="auth-card glass-panel">
                 <div className="auth-header">
                     <div className="auth-logo">
@@ -129,7 +181,7 @@ const Auth = ({ onAuthSuccess }) => {
                 <div className="auth-footer">
                     <p>
                         {isLogin ? "Don't have an account?" : "Already have an account?"}
-                        <button className="auth-toggle-btn" onClick={() => setIsLogin(!isLogin)}>
+                        <button type="button" className="auth-toggle-btn" onClick={() => setIsLogin(!isLogin)}>
                             {isLogin ? 'Create one' : 'Sign in'}
                         </button>
                     </p>
