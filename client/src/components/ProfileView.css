@@ -236,23 +236,23 @@
 }
 
 .theme-circle.ocean {
-    background: linear-gradient(135deg, #6366f1, #a855f7);
-    color: #6366f1;
+    background: #6750A4;
+    color: #6750A4;
 }
 
 .theme-circle.forest {
-    background: linear-gradient(135deg, #10b981, #34d399);
-    color: #10b981;
+    background: #386A20;
+    color: #386A20;
 }
 
 .theme-circle.sunset {
-    background: linear-gradient(135deg, #f59e0b, #f43f5e);
-    color: #f59e0b;
+    background: #8D4F00;
+    color: #8D4F00;
 }
 
 .theme-circle.rose {
-    background: linear-gradient(135deg, #ec4899, #a855f7);
-    color: #ec4899;
+    background: #984061;
+    color: #984061;
 }
 
 .toggle-btn.disabled {

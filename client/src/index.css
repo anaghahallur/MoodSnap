@@ -79,6 +79,76 @@
   --nav-bg: rgba(243, 237, 247, 0.8);
 }
 
+/* =========================================
+   MD3 ACCENT THEMES
+========================================= */
+
+/* FOREST THEME (Green MD3 Seed: #386A20) */
+:root[data-theme='forest'] {
+  /* Dark Mode Forest */
+  --accent-color: #9CD67D;
+  --accent-hover: rgba(156, 214, 125, 0.9);
+  --accent-glow: rgba(156, 214, 125, 0.1);
+  --primary-on: #0C3900;
+  --hover-layer: rgba(156, 214, 125, 0.1);
+  --active-layer: rgba(156, 214, 125, 0.2);
+  --primary-gradient: linear-gradient(135deg, #9CD67D 0%, #B8F397 100%);
+}
+:root[data-theme='forest'].light-mode {
+  /* Light Mode Forest */
+  --accent-color: #386A20;
+  --accent-hover: rgba(56, 106, 32, 0.9);
+  --accent-glow: rgba(56, 106, 32, 0.1);
+  --primary-on: #FFFFFF;
+  --hover-layer: rgba(56, 106, 32, 0.1);
+  --active-layer: rgba(56, 106, 32, 0.2);
+  --primary-gradient: linear-gradient(135deg, #386A20 0%, #53853B 100%);
+}
+
+/* SUNSET THEME (Amber/Orange MD3 Seed: #8D4F00) */
+:root[data-theme='sunset'] {
+  /* Dark Mode Sunset */
+  --accent-color: #FFB77C;
+  --accent-hover: rgba(255, 183, 124, 0.9);
+  --accent-glow: rgba(255, 183, 124, 0.1);
+  --primary-on: #4B2700;
+  --hover-layer: rgba(255, 183, 124, 0.1);
+  --active-layer: rgba(255, 183, 124, 0.2);
+  --primary-gradient: linear-gradient(135deg, #FFB77C 0%, #FFDCC4 100%);
+}
+:root[data-theme='sunset'].light-mode {
+  /* Light Mode Sunset */
+  --accent-color: #8D4F00;
+  --accent-hover: rgba(141, 79, 0, 0.9);
+  --accent-glow: rgba(141, 79, 0, 0.1);
+  --primary-on: #FFFFFF;
+  --hover-layer: rgba(141, 79, 0, 0.1);
+  --active-layer: rgba(141, 79, 0, 0.2);
+  --primary-gradient: linear-gradient(135deg, #8D4F00 0%, #AA681A 100%);
+}
+
+/* ROSE THEME (Pink MD3 Seed: #984061) */
+:root[data-theme='rose'] {
+  /* Dark Mode Rose */
+  --accent-color: #FFB0C8;
+  --accent-hover: rgba(255, 176, 200, 0.9);
+  --accent-glow: rgba(255, 176, 200, 0.1);
+  --primary-on: #5E1133;
+  --hover-layer: rgba(255, 176, 200, 0.1);
+  --active-layer: rgba(255, 176, 200, 0.2);
+  --primary-gradient: linear-gradient(135deg, #FFB0C8 0%, #FFD9E2 100%);
+}
+:root[data-theme='rose'].light-mode {
+  /* Light Mode Rose */
+  --accent-color: #984061;
+  --accent-hover: rgba(152, 64, 97, 0.9);
+  --accent-glow: rgba(152, 64, 97, 0.1);
+  --primary-on: #FFFFFF;
+  --hover-layer: rgba(152, 64, 97, 0.1);
+  --active-layer: rgba(152, 64, 97, 0.2);
+  --primary-gradient: linear-gradient(135deg, #984061 0%, #B45B7C 100%);
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
